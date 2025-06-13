@@ -8,4 +8,11 @@ nest g
 
 nest g --help
 
-nest g module tasks
+generate tasks module => nest g module tasks
+
+generate tasks controller => nest g controller tasks --no-spec
+
+generate tasks service => nest g service tasks --no-spec
+to start app in dev mode => npm run start:dev
+
+to debug nestjs project using webstorm => https://dibishks.medium.com/how-to-add-breakpoints-in-webstorm-for-a-nestjs-project-0e5a05bf19d6
