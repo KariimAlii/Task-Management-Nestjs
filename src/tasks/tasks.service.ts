@@ -31,18 +31,20 @@ export class TasksService {
     return task;
   }
 
-  deleteTaskById(id: string): Task[] {
+  deleteTaskById(id: string): boolean {
+    const initialLength = this.tasks.length;
     this.tasks = this.tasks.filter(task => task.id !== id);
-    return this.tasks;
+    return initialLength !== this.tasks.length;
   }
 
-  updateTask(id: string, updateTaskDto: UpdateTaskDto) : Task | undefined {
+  updateTask(id: string, updateTaskDto: UpdateTaskDto): Task | null {
     const task = this.tasks.find(task => task.id === id);
-    if(task) {
+    if (task) {
       task.title = updateTaskDto.title;
       task.description = updateTaskDto.description;
       task.status = updateTaskDto.status;
+      return task;
     }
-    return task;
+    return null;
   }
 }

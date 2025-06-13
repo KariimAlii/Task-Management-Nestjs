@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, NotFoundException, Param, Post, Put } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { Task, TaskStatus } from './models/task.model';
 import { CreateTaskDto } from './dtos/create-task-dto';
@@ -24,12 +24,20 @@ export class TasksController {
   }
 
   @Delete('/:id')
-  deleteTaskById(@Param('id') id: string): Task[] {
-    return this.tasksService.deleteTaskById(id);
+  @HttpCode(204)
+  deleteTaskById(@Param('id') id: string) {
+    const wasDeleted = this.tasksService.deleteTaskById(id);
+    if (!wasDeleted) {
+      throw new NotFoundException('Task not found');
+    }
   }
 
   @Put('/:id')
-  updateTask(@Param('id') id:string, @Body() request: UpdateTaskDto): Task|undefined {
-    return this.tasksService.updateTask(id, request);
+  async updateTask(@Param('id') id: string, @Body() request: UpdateTaskDto) {
+    const updatedTask = this.tasksService.updateTask(id, request);
+    if (!updatedTask) {
+      throw new NotFoundException('Task not found');
+    }
+    return updatedTask;
   }
 }
