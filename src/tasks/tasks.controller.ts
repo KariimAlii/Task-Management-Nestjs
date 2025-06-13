@@ -1,9 +1,10 @@
-import { Body, Controller, Delete, Get, HttpCode, NotFoundException, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, NotFoundException, Param, Post, Put, Query } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { Task } from './models/task.model';
 import { CreateTaskDto } from './dtos/create-task-dto';
 import { UpdateTaskDto } from './dtos/UpdateTaskDto';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { GetTasksFilterDto } from './dtos/get-tasks-filter-dto';
 
 @ApiTags('tasks')
 @Controller('tasks')
@@ -12,7 +13,10 @@ export class TasksController {
 
   @ApiResponse({status: 200,type: [Task]})
   @Get('/')
-  getAllTasks() {
+  getAllTasks(@Query() tasksFilterDto: GetTasksFilterDto) {
+    if(Object.keys(tasksFilterDto).length){
+      return this.tasksService.getAllTasksWithFilters(tasksFilterDto);
+    }
     return this.tasksService.getAllTasks();
   }
 
