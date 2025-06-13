@@ -1,0 +1,11 @@
+﻿Install nest js cli  npm install -g @nestjs/cli
+
+Create nest js project nest new task-management-app
+
+Reference https://docs.nestjs.com/cli/overview
+
+nest g
+
+nest g --help
+
+nest g module tasks
