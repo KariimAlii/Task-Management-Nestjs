@@ -13,7 +13,8 @@ export class TasksController {
   }
 
   @Post('/')
-  createTask(@Body() body) {
-    console.log(body)
+  createTask(@Body('title') title: string, @Body('description') description: string) {
+    console.log('title',title)
+    console.log('description',description)
   }
 }
