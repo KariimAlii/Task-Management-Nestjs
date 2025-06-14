@@ -1,4 +1,5 @@
 ﻿import { ApiProperty } from '@nestjs/swagger';
+import { Task } from '../entities/task.entity';
 
 export class TaskVM {
   @ApiProperty()
@@ -9,6 +10,15 @@ export class TaskVM {
   description: string;
   @ApiProperty()
   status: TaskStatus;
+
+  static from(task: Task): TaskVM {
+    const vm = new TaskVM();
+    vm.id = task.id;
+    vm.title = task.title;
+    vm.description = task.description;
+    vm.status = task.status;
+    return vm;
+  }
 }
 
 export enum TaskStatus {
