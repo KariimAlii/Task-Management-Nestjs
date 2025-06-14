@@ -7,7 +7,7 @@ import { Task } from './entities/task.entity';
 
 @Module({
   controllers: [TasksController],
-  providers: [TasksService],
+  providers: [TasksService, TasksRepository],
   imports:[
     TypeOrmModule.forFeature([Task]), // registration to enable dependency injection of repositories
   ]

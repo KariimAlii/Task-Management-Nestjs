@@ -11,9 +11,9 @@ import { Repository } from 'typeorm';
 @Injectable()
 export class TasksService {
   constructor(
-    @InjectRepository(Task)
-    private tasksRepository: Repository<Task>,
+    private readonly tasksRepository: TasksRepository
   ) {}
+
   private tasks: TaskVM[] = [
     {
       id: uuid(),
@@ -55,7 +55,7 @@ export class TasksService {
   }
 
   async getTaskById(id: string): Promise<TaskVM | null> {
-    const taskFromDB = await this.tasksRepository.findOneBy({ id });
+    const taskFromDB = await this.tasksRepository.getTaskById(id);
 
     return taskFromDB ? Object.assign(new TaskVM(), {
       id: taskFromDB.id,
@@ -65,15 +65,7 @@ export class TasksService {
     }) : null;
   }
   async createTask(request: CreateTaskDto): Promise<TaskVM> {
-    const task = this.tasksRepository.create({
-      title: request.title,
-      description: request.description,
-      status: TaskStatus.OPEN,
-    })
-
-    await this.tasksRepository.save(task);
-
-    this.tasks.push(task);
+    const task = await this.tasksRepository.createTask(request);
 
     return Object.assign(new TaskVM(), {
       id: task.id,
