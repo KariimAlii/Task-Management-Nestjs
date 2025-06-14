@@ -14,50 +14,34 @@ export class TasksService {
     private readonly tasksRepository: TasksRepository
   ) {}
 
-  private tasks: TaskVM[] = [
-    {
-      id: uuid(),
-      title: 'Task 1',
-      description: 'My Task 1',
-      status: TaskStatus.DONE,
-    },
-    {
-      id: uuid(),
-      title: 'Task 2',
-      description: 'My Task 2',
-      status: TaskStatus.IN_PROGRESS,
-    },
-    {
-      id: uuid(),
-      title: 'Task 3',
-      description: 'My Task 3',
-      status: TaskStatus.OPEN,
-    },
-  ];
-
-  getAllTasks() {
-    return this.tasks;
+  async getAllTasks(): Promise<TaskVM[]> {
+    const tasksFromDB = await this.tasksRepository.getAllTasks();
+    const tasksVM = tasksFromDB
+      .map(task => Object.assign(new TaskVM(), {
+        id: task.id,
+        title: task.title,
+        description: task.description,
+        status: task.status,
+      }))
+    return tasksVM;
   }
 
-  getAllTasksWithFilters(filterDto: GetTasksFilterDto): TaskVM[] {
-    const { status, search } = filterDto;
-    let tasks = this.tasks;
-    if (status) {
-      tasks = tasks.filter((task) => task.status === status);
-    }
-    if (search) {
-      tasks = tasks.filter(
-        (task) =>
-          task.title.includes(search) || task.description.includes(search),
-      );
-    }
-    return tasks;
+  async getAllTasksWithFilters(filterDto: GetTasksFilterDto): Promise<TaskVM[]> {
+    const tasksFromDB = await this.tasksRepository.getAllTasksWithFilters(filterDto);
+    const tasksVM = tasksFromDB
+      .map(task => Object.assign(new TaskVM(), {
+        id: task.id,
+        title: task.title,
+        description: task.description,
+        status: task.status,
+      }))
+    return tasksVM;
   }
 
   async getTaskById(id: string): Promise<TaskVM | null> {
     const taskFromDB = await this.tasksRepository.getTaskById(id);
 
-    return taskFromDB ? Object.assign(new TaskVM(), {
+    return taskFromDB !== null ? Object.assign(new TaskVM(), {
       id: taskFromDB.id,
       title: taskFromDB.title,
       description: taskFromDB.description,
@@ -75,20 +59,17 @@ export class TasksService {
     });
   }
 
-  deleteTaskById(id: string): boolean {
-    const initialLength = this.tasks.length;
-    this.tasks = this.tasks.filter((task) => task.id !== id);
-    return initialLength !== this.tasks.length;
+  async deleteTaskById(id: string): Promise<boolean> {
+    return await this.tasksRepository.deleteTaskById(id);
   }
 
-  updateTask(id: string, updateTaskDto: UpdateTaskDto): TaskVM | null {
-    const task = this.tasks.find((task) => task.id === id);
-    if (task) {
-      task.title = updateTaskDto.title;
-      task.description = updateTaskDto.description;
-      task.status = updateTaskDto.status;
-      return task;
-    }
-    return null;
+  async updateTask(id: string, updateTaskDto: UpdateTaskDto): Promise<TaskVM | null> {
+    const task = await this.tasksRepository.updateTask(id, updateTaskDto);
+    return task !== null ? Object.assign(new TaskVM(), {
+      id: task.id,
+      title: task.title,
+      description: task.description,
+      status: task.status,
+    }) : null;
   }
 }

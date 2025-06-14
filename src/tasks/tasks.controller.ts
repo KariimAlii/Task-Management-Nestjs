@@ -37,8 +37,8 @@ export class TasksController {
 
   @Delete('/:id')
   @HttpCode(204)
-  deleteTaskById(@Param('id') id: string) {
-    const wasDeleted = this.tasksService.deleteTaskById(id);
+  async deleteTaskById(@Param('id') id: string) {
+    const wasDeleted = await this.tasksService.deleteTaskById(id);
     if (!wasDeleted) {
       throw new NotFoundException('Task not found');
     }
@@ -46,8 +46,8 @@ export class TasksController {
 
   @Put('/:id')
   // @ApiResponse({status: 201,type: Task})
-  async updateTask(@Param('id') id: string, @Body() request: UpdateTaskDto) {
-    const updatedTask = this.tasksService.updateTask(id, request);
+  async updateTask(@Param('id') id: string, @Body() request: UpdateTaskDto): Promise<TaskVM | null> {
+    const updatedTask = await this.tasksService.updateTask(id, request);
     if (!updatedTask) {
       throw new NotFoundException('Task not found');
     }
