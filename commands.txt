@@ -33,3 +33,7 @@ TypeORM Active Record vs Data Mapper:
 
 - https://orkhan.gitbook.io/typeorm/docs/active-record-data-mapper
 - https://amirmustafaofficial.medium.com/nest-js-data-mapper-vs-active-record-pattern-typeorm-14408cf4bc6e
+
+TypeORM Repository Api
+
+- https://orkhan.gitbook.io/typeorm/docs/repository-api
