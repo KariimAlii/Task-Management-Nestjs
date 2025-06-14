@@ -16,3 +16,14 @@ generate tasks service => nest g service tasks --no-spec
 to start app in dev mode => npm run start:dev
 
 to debug nestjs project using webstorm => https://dibishks.medium.com/how-to-add-breakpoints-in-webstorm-for-a-nestjs-project-0e5a05bf19d6
+
+class-validator https://www.npmjs.com/package/class-validator
+
+download PostgreSql https://www.enterprisedb.com/downloads/postgres-postgresql-downloads
+download PgAdmin https://www.pgadmin.org/download/ , https://www.postgresql.org/ftp/pgadmin/pgadmin4/v9.4/windows/
+
+Postgresql username: postgres, password: 1111, port: 5432, server => (localhost:5432)
+
+Create Database tasks-management
+
+TypeORM https://typeorm.io/
