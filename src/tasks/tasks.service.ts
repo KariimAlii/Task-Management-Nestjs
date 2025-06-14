@@ -4,8 +4,11 @@ import { v4 as uuid } from 'uuid'
 import { CreateTaskDto } from './dtos/create-task-dto';
 import { UpdateTaskDto } from './dtos/UpdateTaskDto';
 import { GetTasksFilterDto } from './dtos/get-tasks-filter-dto';
+import { TasksRepository } from './repositories/task.repository';
 @Injectable()
 export class TasksService {
+  constructor(private tasksRepository: TasksRepository) {
+  }
   private tasks : Task[] = [
     {id: uuid(), title: 'Task 1', description: 'My Task 1', status: TaskStatus.DONE },
     {id: uuid(), title: 'Task 2', description: 'My Task 2', status: TaskStatus.IN_PROGRESS },

@@ -20,10 +20,16 @@ to debug nestjs project using webstorm => https://dibishks.medium.com/how-to-add
 class-validator https://www.npmjs.com/package/class-validator
 
 download PostgreSql https://www.enterprisedb.com/downloads/postgres-postgresql-downloads
+
 download PgAdmin https://www.pgadmin.org/download/ , https://www.postgresql.org/ftp/pgadmin/pgadmin4/v9.4/windows/
 
 Postgresql username: postgres, password: 1111, port: 5432, server => (localhost:5432)
 
-Create Database tasks-management
+Create Database => (tasks-management)
 
 TypeORM https://typeorm.io/
+
+TypeORM Active Record vs Data Mapper:
+
+- https://orkhan.gitbook.io/typeorm/docs/active-record-data-mapper
+- https://amirmustafaofficial.medium.com/nest-js-data-mapper-vs-active-record-pattern-typeorm-14408cf4bc6e
