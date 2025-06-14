@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TasksModule } from './tasks/tasks.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { CustomLogger } from './logger/custom-logger';
 
 
 @Module({
@@ -15,6 +16,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       database: 'tasks-management',
       autoLoadEntities: true,
       synchronize: true,
+      logging: true,
+      logger: new CustomLogger(),
     })
   ],
   controllers: [],
