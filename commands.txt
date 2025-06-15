@@ -37,3 +37,33 @@ TypeORM Active Record vs Data Mapper:
 TypeORM Repository Api
 
 - https://orkhan.gitbook.io/typeorm/docs/repository-api
+
+
+Install TypeOrm Cli globally
+
+npm install -g typeorm
+
+or locally
+
+npm install typeorm --save-dev
+
+
+(1) Creating Migrations
+
+typeorm-ts-node-commonjs migration:generate src/migrations/InitialSchema -d src/data-source.ts
+
+(2) Running Migration
+
+typeorm-ts-node-commonjs migration:run -d src/data-source.ts
+
+(3) Revert last migration
+
+typeorm-ts-node-commonjs migration:revert -d src/data-source.ts
+
+(4) Show Applied and Pending Commits
+
+typeorm-ts-node-commonjs migration:show -d src/data-source.ts
+
+(5) Create Empty Migration (Manual SQL)
+
+typeorm-ts-node-commonjs migration:create src/migrations/MigrationName

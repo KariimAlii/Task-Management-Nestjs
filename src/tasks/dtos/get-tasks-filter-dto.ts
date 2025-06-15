@@ -9,4 +9,12 @@ export class GetTasksFilterDto {
   @IsOptional()
   @IsString()
   search?: string | null = null;
+
+  @IsOptional()
+  @IsString()
+  projectId?: string;
+
+  @IsOptional()
+  @IsString()
+  userId?: string;
 }
