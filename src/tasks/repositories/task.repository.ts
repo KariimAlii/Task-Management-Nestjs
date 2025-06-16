@@ -27,27 +27,31 @@ export class TasksRepository {
   }
 
   async getAllTasks(): Promise<Task[]> {
-    // Eager Loading
+
+    // Lazy Loading (SELECT on Task Table only)
+    return await this.repo.find();
+
+    // Eager Loading ( SELECT * + Left Join )
     return await this.repo.find({
       relations: ['createdBy', 'assignees', 'project'],
     });
 
-    // Selective Loading
-    // return await this.repo.createQueryBuilder('task')
-    //   .leftJoinAndSelect('task.createdBy', 'createdBy')
-    //   .leftJoinAndSelect('task.assignees', 'assignees')
-    //   .leftJoinAndSelect('task.project', 'project')
-    //   .select([
-    //     'task.id',
-    //     'task.title',
-    //     'task.status',
-    //     'createdBy.id',       // Only get ID from creator
-    //     'createdBy.username', // and username
-    //     'assignees.id',       // Only get ID from assignees
-    //     'project.id',         // Only get ID from project
-    //     'project.name'        // and name
-    //   ])
-    //   .getMany();
+    // Selective Loading ( Select specific columns + Left Join  )
+    return await this.repo.createQueryBuilder('task')
+      .leftJoinAndSelect('task.createdBy', 'createdBy')
+      .leftJoinAndSelect('task.assignees', 'assignees')
+      .leftJoinAndSelect('task.project', 'project')
+      .select([
+        'task.id',
+        'task.title',
+        'task.status',
+        'createdBy.id',       // Only get ID from creator
+        'createdBy.username', // and username
+        'assignees.id',       // Only get ID from assignees
+        'project.id',         // Only get ID from project
+        'project.name'        // and name
+      ])
+      .getMany();
   }
 
   async getAllTasksWithFilters(tasksFilterDto: GetTasksFilterDto): Promise<Task[]> {
