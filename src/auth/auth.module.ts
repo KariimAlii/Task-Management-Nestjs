@@ -11,7 +11,6 @@ import { TasksModule } from '../tasks/tasks.module';
   controllers: [AuthController],
   imports:[
     TypeOrmModule.forFeature([User]), // registration to enable dependency injection of repositories
-    TasksModule
   ]
 })
 export class AuthModule {}

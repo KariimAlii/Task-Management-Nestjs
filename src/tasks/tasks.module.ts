@@ -12,7 +12,6 @@ import { User } from './entities/user.entity';
   providers: [TasksService, TasksRepository, MockUserService],
   imports:[
     TypeOrmModule.forFeature([Task]), // registration to enable dependency injection of repositories
-  ],
-  exports: [User]
+  ]
 })
 export class TasksModule {}
