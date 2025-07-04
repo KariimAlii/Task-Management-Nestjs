@@ -34,4 +34,8 @@ export class UserRepository {
     }
 
   }
+
+  async findUserByUsername(username: string): Promise<User | null> {
+    return this.repo.findOneBy( { username } );
+  }
 }
