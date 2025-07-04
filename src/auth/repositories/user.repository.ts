@@ -2,6 +2,7 @@
 import { ConflictException, Injectable, InternalServerErrorException } from '@nestjs/common';
 import { AuthCredentialsDto } from '../dtos/auth-credentials-dto';
 import { User } from '../../tasks/entities/user.entity';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UserRepository {
@@ -13,7 +14,11 @@ export class UserRepository {
   async createUser(authCredentialsDto: AuthCredentialsDto): Promise<void> {
     const { username, password, email } = authCredentialsDto;
 
-    const user = this.repo.create({ username, password, email });
+    const salt = await bcrypt.genSalt(10);
+
+    const hashedPassword = await bcrypt.hash(password,salt)
+
+    const user = this.repo.create({ username, password: hashedPassword, email });
 
     try {
       await this.repo.save(user);

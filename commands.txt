@@ -67,3 +67,9 @@ typeorm-ts-node-commonjs migration:show -d src/data-source.ts
 (5) Create Empty Migration (Manual SQL)
 
 typeorm-ts-node-commonjs migration:create src/migrations/MigrationName
+
+
+- Install bcrypt and its types:
+npm install bcrypt
+npm install --save-dev @types/bcrypt
+---> @types/bcrypt provides the TypeScript declarations for bcrypt.
