@@ -1,4 +1,4 @@
-import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, Post } from '@nestjs/common';
 import { ApiResponse } from '@nestjs/swagger';
 import { AuthCredentialsDto } from './dtos/auth-credentials-dto';
 import { AuthService } from './auth.service';
@@ -22,5 +22,12 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   async signIn(@Body() loginDto: LoginDto): Promise<LoginVM> {
     return this.authService.signIn(loginDto);
+  }
+
+  @ApiResponse({ status: HttpStatus.OK, type: String  })
+  @Get('dbhost')
+  @HttpCode(HttpStatus.OK)
+  getDbHost() {
+    return this.authService.getDbHost();
   }
 }

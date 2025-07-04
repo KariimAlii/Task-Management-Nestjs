@@ -6,14 +6,20 @@ import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { LoginVM } from './vms/loginVM';
 import { JwtPayload } from './models/jwt-payload';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly userRepository: UserRepository,
     private readonly jwtService: JwtService,
+    private configService: ConfigService
   )
   {}
+
+  getDbHost(): string | undefined {
+    return this.configService.get<string>('DB_HOST');
+  }
 
   async signUp(authCredentialsDto: AuthCredentialsDto): Promise<void> {
     return this.userRepository.createUser(authCredentialsDto);
