@@ -3,6 +3,7 @@ import { ApiResponse } from '@nestjs/swagger';
 import { AuthCredentialsDto } from './dtos/auth-credentials-dto';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dtos/login-dto';
+import { LoginVM } from './vms/loginVM';
 
 @Controller('auth')
 export class AuthController {
@@ -15,11 +16,11 @@ export class AuthController {
     return this.authService.signUp(authCredentialsDto);
   }
 
-  @ApiResponse({ status: 200, type: 'string'  })
-  @ApiResponse({ status: 401, type: 'string'  })
+  @ApiResponse({ status: HttpStatus.OK, type: LoginVM  })
+  @ApiResponse({ status: HttpStatus.UNAUTHORIZED, type: String  })
   @Post('signin')
-  @HttpCode(HttpStatus.CREATED)
-  async signIn(@Body() loginDto: LoginDto): Promise<string> {
+  @HttpCode(HttpStatus.OK)
+  async signIn(@Body() loginDto: LoginDto): Promise<LoginVM> {
     return this.authService.signIn(loginDto);
   }
 }

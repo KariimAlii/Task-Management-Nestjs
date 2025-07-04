@@ -73,3 +73,9 @@ typeorm-ts-node-commonjs migration:create src/migrations/MigrationName
 npm install bcrypt
 npm install --save-dev @types/bcrypt
 ---> @types/bcrypt provides the TypeScript declarations for bcrypt.
+
+
+Passport
+https://www.passportjs.org/
+https://www.passportjs.org/packages/passport-jwt/
+https://docs.nestjs.com/recipes/passport
