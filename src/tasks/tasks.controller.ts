@@ -1,11 +1,26 @@
-import { Controller, Get, Post, Body, Param, Delete, Put, Query, HttpCode, NotFoundException } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  Put,
+  Query,
+  HttpCode,
+  NotFoundException,
+  UseGuards,
+} from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { TaskVM } from './models/task.model';
 import { CreateTaskDto } from './dtos/create-task-dto';
 import { GetTasksFilterDto } from './dtos/get-tasks-filter-dto';
 import { UpdateTaskDto } from './dtos/UpdateTaskDto';
+import { AuthGuard } from '@nestjs/passport';
+
 
 @Controller('tasks')
+@UseGuards(AuthGuard())
 export class TasksController {
   constructor(private tasksService: TasksService) {}
 
