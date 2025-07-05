@@ -1,10 +1,12 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Post } from '@nestjs/common';
-import { ApiResponse } from '@nestjs/swagger';
+import { Body, Controller, Get, HttpCode, HttpStatus, Post, Req, UseGuards } from '@nestjs/common';
+import { ApiBearerAuth, ApiResponse } from '@nestjs/swagger';
 import { AuthCredentialsDto } from './dtos/auth-credentials-dto';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dtos/login-dto';
 import { LoginVM } from './vms/loginVM';
+import { AuthGuard } from '@nestjs/passport';
 
+@ApiBearerAuth('jwt')
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {
@@ -30,4 +32,11 @@ export class AuthController {
   getDbHost() {
     return this.authService.getDbHost();
   }
+
+  @Post('test')
+  @UseGuards(AuthGuard())
+  test(@Req() req: Request) {
+    console.log(req)
+  }
+
 }

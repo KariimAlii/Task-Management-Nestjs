@@ -8,9 +8,10 @@ import { TasksModule } from '../tasks/tasks.module';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { JwtStrategy } from './strategies/jwt-strategy';
 
 @Module({
-  providers: [AuthService, UserRepository],
+  providers: [AuthService, UserRepository, JwtStrategy],
   controllers: [AuthController],
   imports:[
     ConfigModule,
@@ -26,6 +27,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
         },
       }),
     }),
-  ]
+  ],
+  exports: [JwtStrategy, PassportModule] // to enable other modules that import (AuthModule) to use my auth mechanism
 })
 export class AuthModule {}
