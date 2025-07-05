@@ -17,6 +17,8 @@ import { CreateTaskDto } from './dtos/create-task-dto';
 import { GetTasksFilterDto } from './dtos/get-tasks-filter-dto';
 import { UpdateTaskDto } from './dtos/UpdateTaskDto';
 import { AuthGuard } from '@nestjs/passport';
+import { GetUser } from '../auth/decorators/get-user.decorator';
+import { User } from './entities/user.entity';
 
 
 @Controller('tasks')
@@ -31,7 +33,8 @@ export class TasksController {
   }
 
   @Get()
-  getAllTasks(@Query() tasksFilterDto: GetTasksFilterDto) {
+  getAllTasks(@Query() tasksFilterDto: GetTasksFilterDto, @GetUser() user: User) {
+    console.log('Authenticated user:', user);
     if (Object.keys(tasksFilterDto).length) {
       return this.tasksService.getAllTasksWithFilters(tasksFilterDto);
     }
